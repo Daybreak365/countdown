@@ -1,0 +1,13 @@
+.gradle/
+.gradle-user/
+build/
+run/
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+
+# 모델 생성 도구
+__pycache__/

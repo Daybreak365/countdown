@@ -1,0 +1,234 @@
+@font-face {
+  font-family: NotoKR;
+  src: url('assets/NotoSansKR.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  /* Winter night sky, taken from the hero artwork. */
+  --bg: #10162a;
+  --side: #0c1122;
+  --surface: #18203a;
+  --raised: #242e50;
+  --slot: #090d1b;
+  --text: #eef2fb;
+  --secondary: #bcc6de;
+  --muted: #909cbc;
+  --line: #2b3660;
+  --ink: #05070f;
+  /* Minecraft green, lantern gold, ribbon red, aurora teal. */
+  --green: #3c8527;
+  --green-hi: #63b53f;
+  --green-lo: #2a641c;
+  --xp: #80e02c;
+  --gold: #ffd75e;
+  --red: #c8443b;
+  --aurora: #45d8b5;
+  --focus: #ffe58a;
+  --bevel-hi: rgba(255, 255, 255, .13);
+  --bevel-lo: rgba(0, 0, 0, .5);
+  --bevel: inset 2px 2px 0 var(--bevel-hi), inset -2px -2px 0 var(--bevel-lo);
+  --bevel-in: inset 2px 2px 0 var(--bevel-lo), inset -2px -2px 0 var(--bevel-hi);
+  --px-shadow: 2px 2px 0 rgba(5, 7, 15, .75);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  /* Keep these dimensions in sync with loginBounds() in main.cjs. */
+  --sidebar-width: 220px;
+  --topbar-height: 52px;
+  /* Pixel textures. */
+  --tex-stone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cg fill='%23fff' opacity='.035'%3E%3Crect x='1' y='2' width='3' height='1'/%3E%3Crect x='9' y='1' width='2' height='2'/%3E%3Crect x='5' y='7' width='4' height='1'/%3E%3Crect x='12' y='10' width='3' height='1'/%3E%3Crect x='2' y='12' width='2' height='2'/%3E%3C/g%3E%3Cg fill='%23000' opacity='.16'%3E%3Crect x='6' y='3' width='2' height='1'/%3E%3Crect x='13' y='5' width='2' height='2'/%3E%3Crect x='0' y='8' width='3' height='1'/%3E%3Crect x='8' y='12' width='3' height='1'/%3E%3Crect x='4' y='15' width='2' height='1'/%3E%3C/g%3E%3C/svg%3E");
+  --tex-snow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' shape-rendering='crispEdges' fill='%23fff'%3E%3Crect x='12' y='20' width='4' height='4'/%3E%3Crect x='70' y='8' width='2' height='2' opacity='.7'/%3E%3Crect x='130' y='44' width='4' height='4'/%3E%3Crect x='200' y='16' width='2' height='2'/%3E%3Crect x='44' y='90' width='2' height='2' opacity='.6'/%3E%3Crect x='100' y='120' width='4' height='4' opacity='.9'/%3E%3Crect x='170' y='100' width='2' height='2'/%3E%3Crect x='222' y='140' width='4' height='4' opacity='.8'/%3E%3Crect x='20' y='170' width='2' height='2'/%3E%3Crect x='80' y='200' width='4' height='4'/%3E%3Crect x='140' y='180' width='2' height='2' opacity='.7'/%3E%3Crect x='190' y='214' width='2' height='2'/%3E%3Crect x='56' y='146' width='2' height='2' opacity='.5'/%3E%3Crect x='232' y='60' width='2' height='2' opacity='.6'/%3E%3C/svg%3E");
+  --tex-lights-a: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='14' shape-rendering='crispEdges'%3E%3Crect width='96' height='2' fill='%231d4a33'/%3E%3Crect x='9' y='2' width='4' height='2' fill='%23353c58'/%3E%3Crect x='8' y='4' width='6' height='8' fill='%23e5534a'/%3E%3Crect x='9' y='5' width='2' height='2' fill='%23fff' opacity='.55'/%3E%3Crect x='57' y='2' width='4' height='2' fill='%23353c58'/%3E%3Crect x='56' y='4' width='6' height='8' fill='%23ffd75e'/%3E%3Crect x='57' y='5' width='2' height='2' fill='%23fff' opacity='.6'/%3E%3C/svg%3E");
+  --tex-lights-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='14' shape-rendering='crispEdges'%3E%3Crect x='33' y='2' width='4' height='2' fill='%23353c58'/%3E%3Crect x='32' y='4' width='6' height='8' fill='%2345d8b5'/%3E%3Crect x='33' y='5' width='2' height='2' fill='%23fff' opacity='.55'/%3E%3Crect x='81' y='2' width='4' height='2' fill='%23353c58'/%3E%3Crect x='80' y='4' width='6' height='8' fill='%235fa8ff'/%3E%3Crect x='81' y='5' width='2' height='2' fill='%23fff' opacity='.55'/%3E%3C/svg%3E");
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; overflow: hidden; }
+body { font: 14px/1.5 NotoKR, 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; -webkit-user-select: none; user-select: none; }
+input, textarea, [contenteditable="true"], [contenteditable=""], [contenteditable="plaintext-only"] { -webkit-user-select: text; user-select: text; }
+button, input, select { font: inherit; color: inherit; }
+button { border: 0; border-radius: 0; background: none; cursor: pointer; transition: background-color 140ms var(--ease), color 140ms var(--ease), border-color 140ms var(--ease); }
+button:disabled { cursor: default; opacity: .55; }
+button:focus-visible, select:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: square; stroke-linejoin: miter; flex-shrink: 0; }
+.icon-defs { display: none; }
+h1, h2, p { margin: 0; }
+[hidden] { display: none !important; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Shell: stone-textured side panels around the night sky. */
+.app { height: 100vh; display: flex; min-width: 960px; min-height: 540px; }
+.sidebar { width: var(--sidebar-width); flex-shrink: 0; background: var(--side) var(--tex-stone) 0 0 / 32px 32px; image-rendering: pixelated; border-right: 2px solid var(--ink); box-shadow: inset -2px 0 0 var(--bevel-hi); display: flex; flex-direction: column; padding: 32px 16px 24px; }
+.brand { display: flex; align-items: center; gap: 12px; padding: 0 8px 40px; -webkit-app-region: drag; }
+.brand img { width: 52px; height: 52px; margin: -4px -6px -4px -4px; filter: drop-shadow(3px 3px 0 rgba(5, 7, 15, .6)); }
+.brand strong { font-size: 20px; line-height: 1.4; font-weight: 700; text-shadow: var(--px-shadow); }
+.brand strong::first-line { color: var(--gold); }
+.nav-item { display: flex; align-items: center; gap: 12px; width: 100%; height: 44px; padding: 0 16px; text-align: left; color: var(--secondary); font-weight: 500; position: relative; border: 2px solid transparent; }
+.nav-item:hover { background: var(--surface); border-color: var(--ink); box-shadow: var(--bevel); color: var(--text); }
+.nav-item.active { background: var(--raised); border-color: var(--ink); box-shadow: var(--bevel); color: var(--text); text-shadow: var(--px-shadow); }
+.nav-item.active::before { content: ''; position: absolute; left: 4px; width: 4px; height: 20px; background: var(--gold); box-shadow: 2px 2px 0 rgba(5, 7, 15, .6); }
+.nav-item svg { width: 20px; height: 20px; }
+.sidebar-bottom { margin-top: auto; }
+.edition { display: flex; gap: 12px; align-items: center; padding: 0 16px 24px; color: var(--secondary); }
+.edition b { font: 600 14px Arial, sans-serif; display: block; }
+.edition span { font: 11px/16px Arial, sans-serif; color: var(--muted); display: block; margin-top: 4px; }
+/* A snow-capped grass block. */
+.grass-block { position: relative; flex-shrink: 0; width: 32px; height: 32px; background: linear-gradient(#f4f8fc 0 26%, #cfdcee 26% 32%, #6f5a40 32% 100%); border: 2px solid var(--ink); box-shadow: inset -8px 0 #0003; }
+.grass-block::after { content: ''; position: absolute; left: 4px; top: 9px; width: 4px; height: 4px; background: #f4f8fc; box-shadow: 12px 0 #f4f8fc, 4px 10px #86694a, 16px 8px #5b4832; }
+main { flex: 1; min-width: 0; position: relative; display: flex; flex-direction: column; }
+.topbar { position: relative; height: var(--topbar-height); min-height: var(--topbar-height); border-bottom: 2px solid var(--ink); background: var(--side) var(--tex-stone) 0 0 / 32px 32px; display: flex; align-items: center; padding: 0 16px 0 32px; gap: 16px; }
+/* String lights hanging under the title bar. */
+.topbar::before, .topbar::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 14px; pointer-events: none; z-index: 1; image-rendering: pixelated; filter: drop-shadow(0 0 5px rgba(255, 215, 94, .45)); }
+.topbar::before { background: var(--tex-lights-a) 0 0 repeat-x; animation: twinkle 1.8s steps(1) infinite; }
+.topbar::after { background: var(--tex-lights-b) 0 0 repeat-x; animation: twinkle 1.8s steps(1) -0.9s infinite; }
+.title-drag { display: flex; align-items: center; flex: 1; height: 100%; -webkit-app-region: drag; }
+.account-button { display: flex; align-items: center; gap: 10px; text-align: left; padding: 2px 8px; min-height: 40px; border: 2px solid transparent; }
+.account-button:hover:not(:disabled) { background: var(--raised); border-color: var(--ink); box-shadow: var(--bevel); }
+.avatar { position: relative; width: 36px; height: 36px; background: var(--slot); display: grid; place-items: center; border: 2px solid var(--ink); box-shadow: var(--bevel-in); }
+.avatar svg { color: var(--gold); width: 18px; height: 18px; }
+/* Skin face (8x8) with its hat layer on top, shown only once both have loaded. */
+.avatar img { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; }
+.avatar.has-face svg { display: none; }
+.account-button b { display: block; max-width: 192px; overflow: hidden; text-overflow: ellipsis; font-size: 13px; font-weight: 500; }
+.account-button small { display: block; font-size: 11px; line-height: 14px; color: var(--muted); }
+.chevron { width: 16px; height: 16px; color: var(--muted); }
+.window-controls { display: flex; gap: 4px; }
+.window-controls button { width: 32px; height: 32px; font: 20px Arial, sans-serif; color: var(--secondary); border: 2px solid transparent; }
+.window-controls button:hover { background: var(--raised); border-color: var(--ink); box-shadow: var(--bevel); color: var(--text); }
+.window-controls button:last-child:hover { background: var(--red); color: white; }
+
+.page { display: none; flex: 1; min-height: 0; padding: 24px 32px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #3a4778 transparent; }
+.page.visible { display: flex; flex-direction: column; }
+.section-head { display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; margin-bottom: 20px; min-height: 36px; gap: 16px; }
+.section-head h1 { font-size: 24px; font-weight: 700; line-height: 36px; text-shadow: var(--px-shadow); }
+
+/* Hero: the village artwork in a hard frame, with snow and fireworks. */
+.hero { position: relative; border: 2px solid var(--ink); overflow: hidden; flex: 1; min-height: 300px; background: #0d1a33; }
+.hero::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 2px 2px 0 rgba(255, 255, 255, .16), inset -2px -2px 0 rgba(0, 0, 0, .55); }
+.hero-scene { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: right center; }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6, 10, 26, .7) 0, rgba(6, 10, 26, .3) 28%, transparent 52%), linear-gradient(0deg, rgba(6, 10, 26, .88) 0, rgba(6, 10, 26, .55) 18%, transparent 40%); }
+.snow { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.snow i { position: absolute; inset: 0 -24px; animation: sway 7s ease-in-out infinite alternate; }
+.snow i::before { content: ''; position: absolute; inset: -240px 0 0; background: var(--tex-snow); animation: fall 13s linear infinite; }
+.snow i + i { animation-duration: 5s; animation-direction: alternate-reverse; opacity: .55; }
+.snow i + i::before { inset: -150px 0 0; background-size: 150px 150px; animation-name: fall-near; animation-duration: 8s; }
+.fireworks { position: absolute; inset: 0; pointer-events: none; }
+.fireworks i { position: absolute; left: 48%; top: 20%; width: 4px; height: 4px; opacity: 0; color: var(--gold); background: currentColor; box-shadow: 0 -22px, 16px -16px, 22px 0, 16px 16px, 0 22px, -16px 16px, -22px 0, -16px -16px, 0 -11px, 11px 0, 0 11px, -11px 0; animation: burst 6s steps(10) infinite; }
+.fireworks i:nth-child(2) { left: 63%; top: 12%; color: #ff7b6e; animation-delay: -2.1s; }
+.fireworks i:nth-child(3) { left: 36%; top: 30%; color: var(--aurora); animation-delay: -4.2s; }
+.hero-copy { position: absolute; top: 32px; left: 32px; }
+.year { width: 288px; height: auto; display: block; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 rgba(5, 7, 15, .55)); }
+/* Title-screen splash text. */
+.splash { position: absolute; left: 196px; top: 90px; white-space: nowrap; font-size: 15px; font-weight: 700; color: #ffee55; text-shadow: 2px 2px 0 #3f3a10; transform: rotate(-12deg); transform-origin: center; animation: splash 900ms ease-in-out infinite alternate; pointer-events: none; }
+.splash:empty { display: none; }
+
+/* Countdown: pixel digits in inventory slots, inside the hero's bottom ledge. */
+.countdown-label { font-size: 15px; font-weight: 600; white-space: nowrap; text-shadow: var(--px-shadow); padding-bottom: 20px; }
+.countdown { display: flex; gap: 10px; align-items: flex-start; }
+.countdown > div { text-align: center; }
+.px { display: flex; gap: 4px; justify-content: center; min-width: 72px; padding: 8px 10px 6px; background: var(--slot); border: 2px solid var(--ink); box-shadow: var(--bevel-in); }
+.px svg { width: 24px; height: 32px; stroke: none; fill: var(--gold); shape-rendering: crispEdges; }
+.px svg .s { fill: #4a3a10; }
+.countdown span:not(.px) { display: block; font-size: 12px; line-height: 16px; color: var(--secondary); margin-top: 4px; text-shadow: 1px 1px 0 var(--ink); }
+.countdown > i { position: relative; width: 4px; height: 50px; font-size: 0; }
+.countdown > i::before { content: ''; position: absolute; left: 0; top: 17px; width: 4px; height: 4px; background: #5a678f; box-shadow: 0 12px #5a678f; }
+.progress-track { position: relative; height: 8px; background: var(--slot); box-shadow: 0 0 0 2px var(--ink); overflow: hidden; }
+.progress-track > i { display: block; height: 100%; width: 100%; background: linear-gradient(#b4f45a 0 25%, var(--xp) 25% 75%, #4f9a16 75%); transform: scaleX(0); transform-origin: left; transition: transform 160ms var(--ease); }
+/* Segment notches, like the experience bar. */
+.progress-track::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(5, 7, 15, .7) 18px 20px); pointer-events: none; }
+
+/* Play dock: status, countdown and play float over the bottom of the artwork. */
+.play-dock { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 24px 18px; }
+.dock-main { display: flex; align-items: center; gap: 16px; }
+.dock-middle { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.status-line { display: flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 12px; line-height: 20px; color: var(--text); text-shadow: 1px 1px 0 var(--ink); }
+.status-line i { height: 6px; width: 6px; background: var(--muted); flex-shrink: 0; }
+.status-line i.good { background: var(--xp); box-shadow: 0 0 6px rgba(128, 224, 44, .7); }
+.status-line i.error { background: #ff8f7d; }
+.progress-track { flex: 1; margin: 2px; }
+.progress-track.busy > i { width: 30%; animation: indeterminate 1.4s infinite linear; }
+.dock-middle small { color: var(--secondary); text-shadow: 1px 1px 0 var(--ink); font-size: 11px; line-height: 16px; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dock-middle small:empty { display: none; }
+/* The hard button bevel is part of the Minecraft visual language. */
+.play-button { width: 192px; height: 56px; flex-shrink: 0; margin: 0 0 20px auto; background: var(--green); color: #fff; border: 2px solid var(--ink); box-shadow: inset 0 3px 0 var(--green-hi), inset 0 -5px 0 var(--green-lo); display: flex; gap: 12px; align-items: center; justify-content: center; padding-bottom: 2px; font-size: 20px; font-weight: 700; text-shadow: 0 2px 0 #1d4d13; }
+.play-button:hover:not(:disabled) { background: #4a9c31; box-shadow: inset 0 3px 0 #7dcc57, inset 0 -5px 0 var(--green-lo), 0 0 0 2px rgba(255, 255, 255, .85); }
+.play-button:active:not(:disabled) { box-shadow: inset 0 3px 0 var(--green-lo), inset 0 -2px 0 var(--green-lo); padding-bottom: 0; transform: translateY(2px); }
+.play-button svg { fill: currentColor; stroke: currentColor; filter: drop-shadow(0 2px 0 #1d4d13); }
+.cancel-button { order: 1; flex-shrink: 0; white-space: nowrap; margin-bottom: 20px; min-height: 36px; padding: 0 8px; font-size: 12px; color: var(--text); text-shadow: 1px 1px 0 var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.cancel-button:hover { color: var(--text); background: var(--raised); }
+
+.panel { background: var(--surface); border: 2px solid var(--ink); box-shadow: var(--bevel); }
+.settings-panel { width: 100%; max-width: 552px; padding: 24px; }
+.settings-panel label { font-size: 16px; display: block; font-weight: 600; text-shadow: var(--px-shadow); }
+.settings-hint { font-size: 13px; color: var(--secondary); margin-top: 8px; }
+.settings-panel select { margin-top: 16px; width: 100%; height: 44px; padding: 0 12px; background: var(--slot); color: var(--text); border: 2px solid var(--ink); box-shadow: var(--bevel-in); border-radius: 0; font-size: 14px; }
+.form-footer { display: flex; justify-content: flex-end; margin-top: 24px; }
+.primary-small, .small-button { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; padding: 0 16px; font-size: 13px; border: 2px solid var(--ink); }
+.primary-small { background: var(--green); color: #fff; font-weight: 600; box-shadow: inset 0 2px 0 var(--green-hi), inset 0 -3px 0 var(--green-lo); text-shadow: 0 1px 0 #1d4d13; }
+.primary-small:hover:not(:disabled) { background: #4a9c31; }
+.small-button { background: var(--raised); box-shadow: var(--bevel); color: var(--text); }
+.small-button:hover:not(:disabled) { background: #303c66; }
+.save-status { font-size: 12px; color: var(--secondary); }
+/* Advancement-style toast. */
+.toast { position: fixed; bottom: 24px; left: calc(50% + 110px); transform: translateX(-50%) translateY(4px); background: var(--surface); color: var(--text); border: 2px solid var(--ink); border-left: 6px solid var(--gold); box-shadow: var(--bevel), 4px 4px 0 rgba(5, 7, 15, .5); padding: 12px 20px; z-index: 99; opacity: 0; pointer-events: none; transition: opacity 160ms var(--ease), transform 160ms var(--ease); font-size: 13px; max-width: 560px; text-align: center; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+dialog { background: var(--surface); color: var(--text); border: 2px solid var(--ink); box-shadow: var(--bevel), 6px 6px 0 rgba(5, 7, 15, .5); border-radius: 0; width: 440px; max-width: 80vw; padding: 24px; font-family: inherit; }
+dialog::backdrop { background: rgba(5, 7, 15, .8); }
+dialog h2 { font-size: 20px; font-weight: 700; color: var(--gold); text-shadow: var(--px-shadow); }
+dialog p { font-size: 14px; line-height: 1.8; white-space: pre-line; overflow-wrap: anywhere; color: var(--secondary); margin-top: 16px; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; }
+
+/* The native Microsoft view occupies .auth-surface exactly. */
+.auth-overlay { position: absolute; inset: var(--topbar-height) 0 0; background: var(--bg); z-index: 10; display: flex; flex-direction: column; }
+.auth-header { height: 58px; min-height: 58px; display: flex; align-items: center; gap: 12px; padding: 0 24px; }
+.auth-header b { font-size: 14px; font-weight: 600; }
+.auth-header button { margin-left: auto; }
+.ms-mark { display: grid; grid-template-columns: repeat(2, 8px); gap: 2px; }
+.ms-mark i { width: 8px; height: 8px; background: #f35325; }
+.ms-mark i:nth-child(2) { background: #81bc06; }
+.ms-mark i:nth-child(3) { background: #05a6f0; }
+.ms-mark i:nth-child(4) { background: #ffba08; }
+.auth-code-row { height: 44px; min-height: 44px; display: flex; align-items: center; gap: 16px; padding: 0 24px 8px; color: var(--secondary); font-size: 12px; }
+.auth-code-row b { font: 600 18px Consolas, monospace; letter-spacing: 2px; color: var(--gold); }
+.code-copy { border: 2px solid var(--ink); background: var(--raised); box-shadow: var(--bevel); padding: 2px 12px; font-size: 12px; color: var(--text); }
+.code-copy:hover { background: #303c66; }
+.auth-surface { margin: 0 24px; flex: 1; min-height: 0; display: grid; place-items: center; background: white; color: #666; }
+.auth-surface span { font-size: 14px; }
+.auth-footer { height: 32px; min-height: 32px; display: flex; align-items: center; padding: 0 24px; color: var(--muted); font: 12px Arial, sans-serif; }
+
+@keyframes indeterminate { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes fall { to { transform: translate3d(0, 240px, 0); } }
+@keyframes fall-near { to { transform: translate3d(0, 150px, 0); } }
+@keyframes sway { from { transform: translateX(-12px); } to { transform: translateX(12px); } }
+@keyframes splash { from { transform: rotate(-12deg) scale(1); } to { transform: rotate(-12deg) scale(1.07); } }
+@keyframes burst {
+  0% { opacity: 0; transform: scale(.15); }
+  4% { opacity: 1; transform: scale(.3); }
+  22% { opacity: 1; transform: scale(1); }
+  34%, 100% { opacity: 0; transform: translateY(8px) scale(1.1); }
+}
+@media (max-height: 610px) {
+  .page { padding-top: 20px; padding-bottom: 20px; }
+  .hero-copy { top: 28px; }
+  .year { width: 264px; }
+  .splash { left: 180px; top: 82px; }
+}
+@media (max-width: 1160px) {
+  .page { padding-left: 24px; padding-right: 24px; }
+  .topbar { padding-left: 24px; }
+  .dock-main { gap: 12px; }
+  .play-button { width: 168px; }
+  .countdown { gap: 8px; }
+}
+@media (max-width: 1040px) {
+  .play-dock { padding-left: 16px; padding-right: 16px; }
+  .dock-main { gap: 8px; }
+  .play-button { width: 140px; }
+  .px { min-width: 64px; padding-left: 6px; padding-right: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .progress-track.busy > i { transform: translateX(100%) !important; }
+}

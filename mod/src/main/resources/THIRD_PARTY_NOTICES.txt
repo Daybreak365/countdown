@@ -1,0 +1,10 @@
+Twemoji graphics
+Copyright Twitter, Inc. and other contributors.
+Source: https://github.com/jdecked/twemoji/tree/v16.0.1
+Graphics license: Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+Full license: https://github.com/jdecked/twemoji/blob/v16.0.1/LICENSE-GRAPHICS
+
+Unicode emoji graphics are fetched from the pinned Twemoji release via jsDelivr.
+The mod resizes the original PNG graphics for inline chat display. The images
+are cached in memory; no Twemoji source code or image files are bundled here.

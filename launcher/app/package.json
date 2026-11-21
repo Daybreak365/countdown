@@ -1,0 +1,19 @@
+{
+  "name": "countdown-2027-launcher",
+  "version": "1.2.0",
+  "description": "A private Christmas and New Year 2027 Minecraft event launcher",
+  "main": "main.cjs",
+  "author": "Countdown Project",
+  "license": "MIT",
+  "dependencies": {
+    "@xmcl/core": "2.16.2",
+    "@xmcl/installer": "6.3.4",
+    "adm-zip": "0.6.1"
+  },
+  "overrides": {
+    "@xmcl/unzip": "2.1.2"
+  },
+  "scripts": {
+    "postinstall": "node fix-runtime-deps.cjs"
+  }
+}

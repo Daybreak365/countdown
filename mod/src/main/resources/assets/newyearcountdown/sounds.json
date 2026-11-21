@@ -1,0 +1,178 @@
+{
+  "clock_tick": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:clock_tick",
+        "stream": false
+      }
+    ]
+  },
+  "clock_tock": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:clock_tock",
+        "stream": false
+      }
+    ]
+  },
+  "bell_strike": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:bell_strike",
+        "stream": false,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "omikuji_shake": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:omikuji_shake",
+        "stream": false,
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "omikuji_suzu": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:omikuji_suzu",
+        "stream": false,
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "omikuji_reveal": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:omikuji_reveal",
+        "stream": false,
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "omikuji_whoosh": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:omikuji_whoosh",
+        "stream": false
+      }
+    ]
+  },
+  "wish_launch": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:wish_launch",
+        "stream": false,
+        "attenuation_distance": 32
+      }
+    ]
+  },
+  "photo_shutter": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:photo_shutter",
+        "stream": false,
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "photo_beep": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:photo_beep",
+        "stream": false
+      }
+    ]
+  },
+  "jjan_clink_glass": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_clink_glass",
+        "stream": false,
+        "attenuation_distance": 20
+      }
+    ]
+  },
+  "jjan_clink_thick": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_clink_thick",
+        "stream": false,
+        "attenuation_distance": 20
+      }
+    ]
+  },
+  "jjan_clink_crystal": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_clink_crystal",
+        "stream": false,
+        "attenuation_distance": 20
+      }
+    ]
+  },
+  "jjan_clink_metal": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_clink_metal",
+        "stream": false,
+        "attenuation_distance": 20
+      }
+    ]
+  },
+  "jjan_clink_ceramic": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_clink_ceramic",
+        "stream": false,
+        "attenuation_distance": 20
+      }
+    ]
+  },
+  "jjan_clink_wood": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_clink_wood",
+        "stream": false,
+        "attenuation_distance": 20
+      }
+    ]
+  },
+  "jjan_pour": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_pour",
+        "stream": false,
+        "attenuation_distance": 12
+      }
+    ]
+  },
+  "jjan_fizz": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_fizz",
+        "stream": false,
+        "attenuation_distance": 10
+      }
+    ]
+  },
+  "jjan_gulp": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_gulp",
+        "stream": false,
+        "attenuation_distance": 10
+      }
+    ]
+  },
+  "jjan_hiccup": {
+    "sounds": [
+      {
+        "name": "newyearcountdown:jjan_hiccup",
+        "stream": false,
+        "attenuation_distance": 14
+      }
+    ]
+  }
+}

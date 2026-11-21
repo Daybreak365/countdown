@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1d140e">
+  <title>짠</title>
+  <meta name="description" content="복셀로 만든 작은 술집에서, 혼자 바텐더랑, 혹은 친구들과 온라인으로 잔을 부딪혀요.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/vendor/three/build/three.module.js",
+        "three/addons/": "/vendor/three/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <!-- 취하면 화면 가장자리가 붉게 어른거린다 -->
+  <div id="drunk-fx" class="drunk-fx" aria-hidden="true"></div>
+  <div id="labels"></div>
+
+  <section id="title" class="screen">
+    <div class="sign">
+      <h1 class="logo"><span>짠</span></h1>
+      <p id="title-sub" class="sub">오늘 하루도 고생했어요.<br>한 잔 부딪히고 가요.</p>
+      <div id="invite" class="invite" hidden>
+        <span class="invite-tag">초대장</span>
+        <p class="invite-room">방 <b id="invite-code"></b></p>
+        <p id="invite-info" class="invite-info">방을 들여다보는 중...</p>
+      </div>
+      <label class="field">
+        <span>이름</span>
+        <input id="name" maxlength="24" placeholder="손님" autocomplete="nickname">
+      </label>
+      <div id="venue-pick" class="venue-pick">
+        <div id="venue-list" class="venue-list" role="radiogroup" aria-label="가게 고르기"></div>
+        <p id="venue-desc" class="venue-desc"></p>
+        <div class="barkeep-row"><span>바텐더</span><div id="barkeep-list" class="barkeep-list" role="radiogroup" aria-label="바텐더 고르기"></div></div>
+      </div>
+      <div id="invite-actions" class="invite-actions" hidden>
+        <button id="btn-enter" class="btn big warm wide">이 방에 들어가기<small>자리 고르고 한 잔 시키기</small></button>
+        <button id="btn-other" class="linkish" type="button">다른 걸로 할래요</button>
+      </div>
+      <div id="choices">
+        <div class="modes">
+          <button id="btn-single" class="btn big">혼자 짠<small>바텐더랑 한 잔</small></button>
+          <button id="btn-multi" class="btn big warm">같이 짠<small>방 만들고 친구 부르기</small></button>
+        </div>
+        <div class="join">
+          <input id="code" maxlength="4" placeholder="방 코드" autocomplete="off" spellcheck="false">
+          <button id="btn-join" class="btn">들어가기</button>
+        </div>
+      </div>
+      <p id="title-msg" class="msg" role="status"></p>
+    </div>
+  </section>
+
+  <!-- 소리: 첫 화면에서도, 게임 중에도 -->
+  <div id="sound" class="sound">
+    <button id="btn-sound" class="btn small icon-btn" aria-expanded="false" aria-controls="sound-panel" title="소리"><span class="ic"></span><span class="lbl">소리</span></button>
+    <div id="sound-panel" class="sound-panel" hidden>
+      <label class="slider"><span>소리 크기</span><input id="vol-all" type="range" min="0" max="100" step="5"><b id="vol-all-v"></b></label>
+      <label class="slider"><span>음악</span><input id="vol-music" type="range" min="0" max="100" step="5"><b id="vol-music-v"></b></label>
+      <label class="slider"><span>가게 소리</span><input id="vol-fire" type="range" min="0" max="100" step="5"><b id="vol-fire-v"></b></label>
+      <button id="btn-mute" class="btn small wide" aria-pressed="false">음소거</button>
+    </div>
+  </div>
+
+  <section id="hud" hidden>
+    <header class="top">
+      <button id="btn-leave" class="btn small">나가기</button>
+      <button id="btn-venue" class="btn small icon-btn" aria-controls="venue-sheet"><span class="ic"></span><span class="lbl">가게</span></button>
+      <button id="btn-music" class="btn small icon-btn np" aria-controls="music"><span class="ic"></span><span id="np-text" class="np-text">음악</span></button>
+      <button id="btn-look" class="btn small icon-btn" aria-pressed="false" title="둘러보기"><span class="ic"></span><span class="lbl">둘러보기</span></button>
+      <div id="room-info" class="room" hidden>
+        <span class="code">방 <b id="room-code"></b></span>
+        <span id="people" class="people"></span>
+        <button id="btn-invite" class="btn small">초대 링크 복사</button>
+      </div>
+    </header>
+    <div id="counter" class="counter" aria-live="polite"><span>짠</span><b id="count">0</b></div>
+    <div id="tipsy" class="tipsy" title="취기"><span id="tipsy-lbl">말짱</span><b><i></i><i></i><i></i><i></i><i></i></b></div>
+    <p id="hint" class="hint"></p>
+    <div id="look-bar" class="look-bar" hidden>
+      <span>끌어서 고개를 돌려 보세요<small>누르면 그 물건을 써요 · 휠로 당겨 보기</small></span>
+      <button id="btn-look-done" class="btn small warm">자리로</button>
+    </div>
+    <footer class="bar">
+      <div class="actions">
+        <button id="btn-pick" class="btn act" data-icon="bottle"><span>술 바꾸기</span></button>
+        <button id="btn-anju" class="btn act" data-icon="anju"><span>안주</span></button>
+        <button id="btn-sip" class="btn act sip-big" data-icon="sip" aria-describedby="sip-tip"><i class="hold" aria-hidden="true"></i><span>마시기</span><small id="sip-tip">꾹 누르면 원샷</small></button>
+        <button id="btn-refill" class="btn act" data-icon="refill"><span>채우기</span></button>
+        <button id="btn-remedy" class="btn act" data-icon="remedy" aria-expanded="false" aria-controls="remedy-panel"><span>해장</span></button>
+      </div>
+      <div id="phrases" class="phrases"></div>
+      <div id="emo-tray" class="emo-tray" role="group" aria-label="이모지 반응" hidden></div>
+      <div id="emo-picker" class="emo-picker" role="dialog" aria-label="이모지 고르기" hidden>
+        <div class="emo-head">
+          <input id="emo-search" type="search" placeholder="찾기 · 직접 입력 (맥주, 하트, 😎)" autocomplete="off" enterkeyhint="send" aria-label="이모지 찾기">
+          <button id="btn-emo-tone" class="emo-tone" aria-expanded="false" aria-controls="emo-tones" title="피부색">✋</button>
+          <button id="btn-emo-close" class="btn small">닫기</button>
+        </div>
+        <div id="emo-tones" class="emo-tones" role="radiogroup" aria-label="피부색" hidden></div>
+        <nav id="emo-tabs" class="emo-tabs" aria-label="이모지 묶음"></nav>
+        <div id="emo-grid" class="emo-grid" tabindex="-1"><p class="emo-empty">불러오는 중…</p></div>
+        <div id="emo-foot" class="emo-foot">누르면 바로 보내요. 여러 번 눌러도 돼요.</div>
+      </div>
+    </footer>
+    <div id="remedy-panel" class="remedy-panel" hidden>
+      <b>숙취해소제</b>
+      <div id="remedy-list" class="remedy-list"></div>
+    </div>
+  </section>
+
+  <aside id="picker" class="side" hidden>
+    <div class="sheet" role="dialog" aria-labelledby="pick-title">
+      <header>
+        <h2 id="pick-title">오늘의 한 잔</h2>
+        <button id="btn-close-pick" class="btn small">닫기</button>
+      </header>
+      <nav id="cats" class="tabs"></nav>
+      <div id="drinks" class="grid"></div>
+      <div class="detail">
+        <b id="pick-name"></b>
+        <span id="pick-desc"></span>
+      </div>
+      <h3 class="variant-only" id="variant-h">상품 고르기</h3>
+      <nav id="variants" class="tabs chips variant-only" role="radiogroup" aria-labelledby="variant-h"></nav>
+      <h3 class="glass-only">잔 고르기</h3>
+      <div id="glasses" class="row glass-only"></div>
+      <footer>
+        <button id="btn-confirm" class="btn warm wide">이걸로 할게요</button>
+      </footer>
+    </div>
+  </aside>
+
+  <aside id="seats" class="side" hidden>
+    <div class="sheet" role="dialog" aria-labelledby="seat-title">
+      <header>
+        <h2 id="seat-title">자리 고르기</h2>
+        <button id="btn-close-seat" class="btn small">닫기</button>
+      </header>
+      <nav id="table-tabs" class="tabs" role="tablist"></nav>
+      <p id="seat-note" class="note"></p>
+      <div id="seat-map" class="seat-map"></div>
+      <div class="detail">
+        <b id="seat-name"></b>
+        <span id="seat-desc"></span>
+      </div>
+      <footer>
+        <button id="btn-seat-ok" class="btn warm wide">여기 앉을게요</button>
+      </footer>
+    </div>
+  </aside>
+
+  <aside id="venue-sheet" class="side" hidden>
+    <div class="sheet" role="dialog" aria-labelledby="venue-title">
+      <header>
+        <h2 id="venue-title">가게와 바텐더</h2>
+        <button id="btn-close-venue" class="btn small">닫기</button>
+      </header>
+      <p id="venue-note" class="note"></p>
+      <div id="venue-cards" class="venue-cards"></div>
+      <h3>바텐더</h3>
+      <p id="barkeep-note" class="note"></p>
+      <div id="barkeep-cards" class="barkeep-cards"></div>
+    </div>
+  </aside>
+
+  <!-- 신청곡: 유튜브 · 유튜브 뮤직 링크로 같이 듣기 -->
+  <aside id="music" class="side music" hidden>
+    <div class="sheet" role="dialog" aria-labelledby="music-title">
+      <header>
+        <h2 id="music-title">신청곡</h2>
+        <button id="btn-close-music" class="btn small">닫기</button>
+      </header>
+      <div id="music-screen" class="music-screen"><p id="music-empty" class="empty">유튜브나 유튜브 뮤직 링크를 넣으면<br>여기서 틀어요.</p></div>
+      <div class="music-now">
+        <b id="music-now">아직 조용해요</b>
+        <span id="music-sub"></span>
+        <div class="prog"><i id="music-prog"></i></div>
+      </div>
+      <div class="music-ctrl">
+        <button id="btn-music-play" class="btn">일시정지</button>
+        <button id="btn-music-next" class="btn">다음 곡</button>
+        <button id="btn-music-unblock" class="btn warm" hidden>눌러서 같이 듣기</button>
+      </div>
+      <form id="music-form" class="music-form" autocomplete="off">
+        <input id="music-url" type="text" inputmode="url" placeholder="유튜브 · 유튜브 뮤직 링크" spellcheck="false" aria-label="유튜브 링크">
+        <button class="btn warm" type="submit">신청</button>
+      </form>
+      <p id="music-note" class="note"></p>
+      <h3 id="music-queue-h" hidden>다음 곡</h3>
+      <ol id="music-queue" class="music-queue"></ol>
+      <label class="check"><input id="music-mini" type="checkbox"> 창을 닫아도 작은 화면 띄워 두기</label>
+    </div>
+  </aside>
+  <div id="yt-wrap" class="yt-wrap off" aria-hidden="true"><div id="yt-frame"></div></div>
+
+  <!-- 계산하고 나가기: 영수증 -->
+  <div id="receipt" class="receipt" hidden>
+    <div class="receipt-box" role="dialog" aria-modal="true" aria-label="영수증">
+      <div class="receipt-slot"><canvas id="receipt-canvas" class="receipt-paper"></canvas></div>
+      <div class="receipt-actions">
+        <button id="btn-receipt-save" class="btn">이미지 저장</button>
+        <button id="btn-receipt-share" class="btn" hidden>공유하기</button>
+        <button id="btn-receipt-stay" class="btn">더 마실래요</button>
+        <button id="btn-receipt-leave" class="btn warm">계산하고 나가기</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

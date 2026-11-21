@@ -1,0 +1,50 @@
+원클릭 테스트 / 런처 빌드
+
+1. test.bat - 테스트 시작
+
+   mod/build/libs에서 가장 최근에 수정된 배포 JAR를 선택합니다.
+   sources, javadoc, dev, test JAR는 제외합니다. 모드 소스 자체를 빌드하지는 않습니다.
+   launcher/app/server-mods와 server/mods의 기존 카운트다운 모드를 교체합니다.
+   파일 이름을 바꿔 둔 모드도 내부 ID(newyearcountdown)로 찾으며, Fabric API 등 다른 모드는 유지합니다.
+   launcher/app/assets/submitted-file.json의 파일 이름, 버전, 크기, 해시도 갱신합니다.
+   server/run.bat으로 서버를 새 콘솔에서 시작하고, 서버 준비 완료 후 개발용 런처(npm start)를 실행합니다.
+   런처에서 로그인하고 플레이를 누르면 됩니다. 게임 로그인과 플레이 버튼은 직접 진행합니다.
+
+   서버의 메모리 설정은 기존 server/run.bat을 사용합니다(현재 -Xms8G -Xmx24G).
+   접속 주소는 기존 launcher/app/server-config.json을 사용합니다(현재 saebyeok.iptime.org).
+   로컬 주소로 접속하려면 이 파일의 serverAddress를 127.0.0.1:25565로 설정합니다.
+   배포용 런처를 빌드하기 전에는 원하는 배포 서버 주소인지 확인하세요.
+
+   테스트 종료: 게임과 런처를 닫고, 서버 콘솔에 stop 입력 후 콘솔도 닫습니다.
+   다음 테스트 때 기존 서버가 실행 중이거나 포트를 사용 중이면 모드를 교체하지 않고 안내합니다.
+   서버를 강제로 종료하거나 실행 중인 월드를 덮어쓰지 않습니다.
+   서버 시작에 120초 이상 걸리거나 실패하면 서버 콘솔과 server/logs/latest.log를 확인하세요.
+
+2. build-launcher.bat - 배포용 런처 빌드
+
+   최신 모드를 launcher/app/server-mods에 반영합니다.
+   필요하면 npm 의존성을 설치하고, 기존 의존성 보정 스크립트를 실행합니다.
+   npm test가 성공하면 npm run build:portable을 실행합니다.
+   서버는 실행하지 않으며 server/mods도 변경하지 않습니다.
+
+   최종 결과: launcher/portable-build/2027-Launcher-Portable.exe
+   압축 전 폴더: launcher/build/2027-Launcher-win32-x64
+   기존 결과물은 새 빌드로 갱신됩니다. 기존 결과물을 실행 중이면 닫은 뒤 빌드하세요.
+
+공통 사항
+
+- Node.js 24 이상과 npm이 필요합니다. 서버에는 Java 25가 필요합니다.
+- npm 의존성이 없으면 자동 설치하며, 최초 설치/빌드에는 인터넷 연결이 필요할 수 있습니다.
+- 빌드 중인 모드를 복사하지 않도록 모드 빌드가 끝난 후 실행하세요.
+- 원본은 .automation/backups/시간-식별자/에 보관합니다. 교체 중 실패하면 원복을 시도합니다.
+- 실패 원인을 확인할 수 있도록 BAT 창은 바로 닫히지 않습니다.
+- Discord OAuth의 Client ID/Secret과 Redirect 설정은 별도입니다. mod/docs/DISCORD_OAUTH.md를 참고하세요.
+
+실행 없이 확인 (터미널):
+  test.bat -DryRun
+  build-launcher.bat -DryRun
+
+프로그램 실행 없이 두 폴더의 모드만 교체:
+  powershell -NoProfile -ExecutionPolicy Bypass -File tools/workspace.ps1 -Action Sync
+
+실제 처리는 tools/workspace.ps1에 들어 있습니다. BAT와 함께 폴더 구조를 유지하세요.

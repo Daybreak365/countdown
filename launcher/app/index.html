@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'">
+<title>2027 카운트다운</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Zm0 0 9 4 9-4M12 11v10"/></symbol>
+<symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="1"/><rect x="3" y="14" width="18" height="7" rx="1"/><path d="M6 6.5h1m3 0h8M6 17.5h1m3 0h8"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 3-1 3-3 1 1 4-2 2 2 4 3-1 3 2 3-2 3 1 2-4-2-2 1-4-3-1-1-3Z"/><circle cx="12" cy="11" r="3"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="1"/><path d="M15 8V3H3v13h5"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 3h9v12H3Z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 5"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17h12l-2-3V9a4 4 0 0 0-8 0v5Zm4 3h4M12 3v2"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5ZM20 2v4m-2-2h4"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="8"/><path d="M5 21v-7h14v7"/></symbol>
+</defs></svg>
+<div class="app">
+ <aside class="sidebar">
+  <div class="brand"><img src="assets/launcher-icon.png" alt=""><strong>2027<br>카운트다운</strong></div>
+  <nav aria-label="메뉴"><button class="nav-item active" data-page="home" aria-current="page" aria-controls="page-home"><svg aria-hidden="true"><use href="#i-grid"/></svg>플레이</button></nav>
+  <div class="sidebar-bottom"><div class="edition"><div class="grass-block" aria-hidden="true"></div><div><b>Minecraft</b><span>Java Edition</span></div></div>
+   <button class="nav-item" data-page="settings" aria-controls="page-settings"><svg aria-hidden="true"><use href="#i-settings"/></svg>설정</button>
+  </div>
+ </aside>
+ <main>
+  <header class="topbar"><div class="title-drag"></div>
+   <button class="account-button" id="accountButton"><span class="avatar" id="avatar"><svg><use href="#i-user"/></svg></span><span><b id="accountName">Microsoft 계정</b><small id="accountHint">로그인</small></span><svg class="chevron"><use href="#i-chevron"/></svg></button>
+   <div class="window-controls"><button data-window="minimize" aria-label="최소화">−</button><button data-window="maximize" aria-label="최대화">□</button><button data-window="close" aria-label="닫기">×</button></div>
+  </header>
+  <section class="page visible" id="page-home">
+   <div class="hero"><img class="hero-scene" src="assets/mc.png" alt="오로라 아래 눈 덮인 마인크래프트 마을과 크리스마스 트리" width="2172" height="724" fetchpriority="high">
+    <div class="hero-shade" aria-hidden="true"></div><div class="fireworks" aria-hidden="true"><i></i><i></i><i></i></div><div class="snow" aria-hidden="true"><i></i><i></i></div>
+    <div class="hero-copy"><img class="year" src="assets/year.svg" alt="2027" width="480" height="174"><span class="splash" id="splash" aria-hidden="true"></span></div>
+    <div class="play-dock">
+     <div class="dock-middle" id="dockStatus" hidden><div class="status-line" role="status"><i id="statusDot" aria-hidden="true"></i><span id="statusText">대기 중</span></div><div class="progress-track" role="progressbar" aria-label="게임 준비" aria-valuemin="0" aria-valuemax="100" hidden><i id="progressBar"></i></div><small id="progressDetail"></small></div>
+     <div class="dock-main"><b class="countdown-label">2027년까지</b><div class="countdown" aria-label="2027년 카운트다운"><div><span class="px" id="px-days" aria-hidden="true"></span><b class="sr" id="cd-days">00</b><span>일</span></div><i>:</i><div><span class="px" id="px-hours" aria-hidden="true"></span><b class="sr" id="cd-hours">00</b><span>시간</span></div><i>:</i><div><span class="px" id="px-minutes" aria-hidden="true"></span><b class="sr" id="cd-minutes">00</b><span>분</span></div><i>:</i><div><span class="px" id="px-seconds" aria-hidden="true"></span><b class="sr" id="cd-seconds">00</b><span>초</span></div></div><button class="cancel-button" id="cancelButton" hidden>취소</button><button class="play-button" id="playButton"><svg aria-hidden="true"><use href="#i-play"/></svg><span id="playLabel">플레이</span></button></div>
+    </div>
+   </div>
+  </section>
+  <section class="page" id="page-settings"><div class="section-head"><h1>설정</h1><span class="save-status" id="saveStatus" role="status"></span></div>
+   <form id="settingsForm" class="panel settings-panel"><label for="memoryInput">메모리 할당</label><p class="settings-hint" id="memoryHint">Minecraft에서 사용할 메모리 · 다음 실행부터 적용</p><select name="memoryMb" id="memoryInput" aria-describedby="memoryHint"><option value="2048">2 GB</option><option value="3072">3 GB</option><option value="4096">4 GB</option><option value="6144">6 GB</option><option value="8192">8 GB</option><option value="12288">12 GB</option><option value="16384">16 GB</option></select><div class="form-footer"><button type="submit" class="primary-small">저장</button></div></form>
+  </section>
+  <section class="auth-overlay" id="authOverlay" hidden aria-label="Microsoft 로그인"><div class="auth-header"><span class="ms-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>Microsoft 로그인</b><button id="authCancel" class="small-button">취소</button></div><div class="auth-code-row"><span>인증 코드</span><b id="authCode"></b><button id="authCopy" class="code-copy">복사</button></div><div class="auth-surface" id="authSurface"><span>로그인 화면을 여는 중</span></div><div class="auth-footer"><span id="authOrigin"></span></div></section>
+ </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="infoDialog" aria-labelledby="dialogTitle" aria-describedby="dialogBody"><h2 id="dialogTitle"></h2><p id="dialogBody"></p><div class="dialog-actions"><button class="small-button" id="dialogClose">닫기</button><button class="primary-small" id="dialogAction"></button></div></dialog>
+<script src="renderer.js"></script>
+</body></html>

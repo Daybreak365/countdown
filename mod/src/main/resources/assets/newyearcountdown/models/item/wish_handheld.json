@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:block/white_concrete",
+    "particle": "minecraft:block/white_concrete"
+  }
+}

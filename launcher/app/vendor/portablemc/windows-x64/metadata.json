@@ -1,0 +1,13 @@
+{
+  "version": "5.0.5",
+  "source": "https://github.com/theorzr/portablemc/releases/download/v5.0.5/portablemc-5.0.5-windows-x86_64-msvc.zip",
+  "archiveSha256": "c1ad577e9441040e65a55b521c6ab0fc4c32ec0c6f114d169ae6eee7d3d9fda6",
+  "binarySha256": "1af06cedeaa17432047e76c04b73b9af4e3161c90a8b91324aeb3ad288604f41",
+  "runtime": {
+    "name": "vcruntime140.dll",
+    "sha256": "d1f4225df2cd877dbf130d5668a021dce3f94118455ff5ec952061c30afc9ce7",
+    "source": "https://aka.ms/vc14/vc_redist.x64.exe",
+    "packageSha256": "843068991daaa1f73ad9f6239bce4d0f6a07a51f18c37ea2a867e9beca71295c",
+    "packageVersion": "14.51.36247.0"
+  }
+}

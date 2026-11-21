@@ -1,0 +1,11 @@
+PortableMC 5.0.5
+Official unmodified Windows x64 CLI: https://github.com/theorzr/portablemc/releases/tag/v5.0.5
+Apache License 2.0. See LICENSE.txt in this directory.
+
+Microsoft Visual C++ Runtime 14.51.36247.0
+vcruntime140.dll: Copyright Microsoft Corporation. All rights reserved.
+Original Microsoft package: https://aka.ms/vc14/vc_redist.x64.exe
+Microsoft Software License Terms: https://aka.ms/VCRedistLicense
+Redistribution documentation: https://learn.microsoft.com/en-us/cpp/windows/redistributing-visual-cpp-files
+The DLL is included unchanged next to the dependent PortableMC executable.
+The custom launcher's MIT license does not apply to this Microsoft binary.

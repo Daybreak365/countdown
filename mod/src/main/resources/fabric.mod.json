@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "newyearcountdown",
+  "version": "${version}",
+  "name": "New Year Countdown",
+  "description": "새해 카운트다운 HUD와 보신각 타종 모드. AI 소원 엔진(첫눈) 포함.",
+  "authors": [
+    "새벽"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.newyear.countdown.NewYearCountdown"
+    ],
+    "client": [
+      "dev.newyear.countdown.client.NewYearCountdownClient"
+    ],
+    "modmenu": [
+      "dev.newyear.countdown.client.ModMenuIntegration"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "mixins": [
+    {
+      "config": "newyearcountdown.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "newyearcountdown.ai.mixins.json",
+      "environment": "*"
+    }
+  ]
+}

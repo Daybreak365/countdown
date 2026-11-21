@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "newyearcountdown:item/wish_shield",
+    "model": {
+      "type": "newyearcountdown:wish_texture",
+      "cube": false
+    }
+  }
+}
